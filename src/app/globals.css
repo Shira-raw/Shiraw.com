@@ -1,0 +1,282 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-space-grotesk);
+
+  --color-background: #1F2937;
+  --color-foreground: #FFFFFF;
+
+  --color-primary: #FFFFFF;
+  --color-secondary: #D1D5DB;
+  --color-accent: #10B981;
+  --color-highlight: #F59E0B;
+}
+
+:root {
+  --background: #1F2937;
+  --foreground: #FFFFFF;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em;
+}
+
+/* Hardware Acceleration Utility */
+.gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4B5563;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: #000000;
+}
+
+/* Utility for glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-nav {
+  background: rgba(31, 41, 55, 0.8);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bg-grid {
+  background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.bg-grid-sm {
+  background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.bg-grid-xs {
+  background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Gradient Animation */
+@keyframes gradient-x {
+
+  0%,
+  100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 4s ease infinite;
+}
+
+/* Text Gradient Shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ===== 60FPS PERFORMANCE OPTIMIZATIONS ===== */
+
+/* Force GPU acceleration for animated elements */
+.gpu-accelerated,
+[class*="animate-"],
+.transition-all,
+.transition-transform,
+.transition-colors,
+.transition-opacity {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Optimize Framer Motion animations */
+[data-framer-component-type="Frame"] {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Smooth transitions */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Optimized hover states */
+.hover\:scale-\[1\.02\]:hover,
+.group:hover .group-hover\:scale-110 {
+  transform: translateZ(0) scale(1.02);
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optimize blur effects */
+.backdrop-blur-sm,
+.backdrop-blur-md,
+.backdrop-blur-xl {
+  transform: translateZ(0);
+}
+
+/* Optimize box shadows */
+.shadow-\[0_0_30px_rgba\(16\,185\,129\,0\.3\)\],
+.shadow-\[0_0_40px_rgba\(16\,185\,129\,0\.3\)\],
+.shadow-\[0_0_60px_rgba\(16\,185\,129\,0\.4\)\] {
+  transform: translateZ(0);
+}
+
+/* Optimize gradients */
+.bg-gradient-to-r,
+.bg-gradient-to-br,
+.bg-gradient-to-t {
+  transform: translateZ(0);
+}
+
+/* Smooth card hover animations */
+.card-hover {
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  transform: translateZ(0);
+}
+
+.card-hover:hover {
+  transform: translateZ(0) translateY(-8px);
+}
+
+/* Optimized border animations */
+.border-animate {
+  transition: border-color 0.3s ease;
+}
+
+/* Fix for laggy blur on some browsers */
+@supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
+
+  .glass,
+  .glass-nav,
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-xl {
+    will-change: backdrop-filter;
+  }
+}
+
+/* ===== SMOOTH MARQUEE ANIMATION ===== */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-container {
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 3rem;
+  animation: marquee 40s linear infinite;
+  width: max-content;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+/* ===== TRANSFORM GPU UTILITY ===== */
+.transform-gpu {
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* ===== OPTIMIZED MOTION ELEMENTS ===== */
+[data-framer-component-type] {
+  contain: layout style paint;
+}
+
+/* Smooth scroll-linked animations */
+.scroll-smooth-transform {
+  will-change: transform;
+  contain: layout paint;
+}
